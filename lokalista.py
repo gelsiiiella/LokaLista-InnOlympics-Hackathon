@@ -31,9 +31,9 @@ def main_interface():
     recommended_list = ""
     total_price = 0
     for row in df.itertuples():
-        if total_price + int(row.price) <= budget:
-            recommended_list += f"{row.market}  ||  {row.commodity}  ||  {row.price}\n"
-            total_price += int(row.price)
+        if total_price + int(row.PricePHP) <= budget:
+            recommended_list += f"{row.Province}  ||  {row.Commodity}  ||  {row.PricePHP}\n"
+            total_price += int(row.PricePHP)
     stx.scrollableTextbox(recommended_list, height=300)
 
     st.subheader("Total Price: " + str(total_price))
@@ -43,7 +43,7 @@ def main_interface():
     st.button("Save", key="btn2")
     
 def gsheet():   
-    url = "https://docs.google.com/spreadsheets/d/1h2MKH4nEekEWF_Ad3sbhhVPQC8UCQ-m9lVLkDyfaa0s/edit#gid=0"
+    url = "https://docs.google.com/spreadsheets/d/1RiUc_unHWsdjHpAG8mIvMb1GD3_atoSSI_D_cSCCu2k/edit?usp=sharing"
     conn = st.connection("gsheets", type=GSheetsConnection)
     data = conn.read(spreadsheet=url)
     return data
