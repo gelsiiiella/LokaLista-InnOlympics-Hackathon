@@ -3,6 +3,11 @@ import pandas as pd
 from streamlit_extras.tags import tagger_component
 from streamlit_gsheets import GSheetsConnection
 import streamlit_scrollable_textbox as stx
+from dotenv import load_dotenv
+import os
+from notion_client import Client
+
+load_dotenv()
 
 def main_interface():
     plaintext = st.text_input(label="Enter your budget amount", value="600")
@@ -46,9 +51,10 @@ def main_interface():
 
     st.subheader("Total Price: " + str(total_price))
 
-    
-
-    st.button("Save", key="btn2")
+    st.header("Get your list in Notion!")
+    st.header("Remember to add connection to your Page")
+    page_url=st.text_input(label="Enter your Notion Page ID here",value="https://www.notion.so/API-TEST-b7b7540389a84514a3ab6b49215817a9")
+    st.button("Save", key="btn2", on_click=notion,args=[page_url])
     
 def gsheet():   
     url = "https://docs.google.com/spreadsheets/d/1RiUc_unHWsdjHpAG8mIvMb1GD3_atoSSI_D_cSCCu2k/edit?usp=sharing"
@@ -56,8 +62,74 @@ def gsheet():
     data = conn.read(spreadsheet=url)
     return data
 
-def notion():
-    pass
+def todolist(page_id,content):
+    notion.blocks.children.append(
+        **{
+            "block_id":page_id,
+            "children":[
+                {
+                    "to_do": 
+                    {
+                        "rich_text": [{
+                            "text": {
+                                "content": "Finish Q3 goals",
+                            }
+                        },],
+                        "checked": False,
+                        "color": "default",
+                    }
+                }
+            ]
+        }
+    )
+
+def notion(page_url):
+    page_id=(page_url[-32:])
+    print(page_id)
+   
+    notion = Client(auth=os.environ["NOTION_TOKEN"])
+
+    notion.blocks.children.append(
+        **{
+            "block_id":page_id,
+            "children":[
+                {
+                    "heading_2": {
+                        "rich_text": [
+                        {
+                            "text": {
+                                "content": "Shopping List"
+                            },
+                        },
+                        ],
+                        "color":"red"
+                    },
+                },
+            ]
+        }
+    )
+
+    """
+    notion.blocks.children.append(
+        **{
+            "block_id":page_id,
+            "children":[
+                {
+                    "to_do": 
+                    {
+                        "rich_text": [{
+                            "text": {
+                                "content": "Finish Q3 goals",
+                            }
+                        },],
+                        "checked": False,
+                        "color": "default",
+                    }
+                }
+            ]
+        }
+    )
+    """
 
 def generate():
     pass
