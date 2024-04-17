@@ -28,13 +28,21 @@ def main_interface():
     st.header("Recommended")
     
     df = gsheet()
+
     recommended_list = ""
     total_price = 0
     for row in df.itertuples():
         if total_price + int(row.PricePHP) <= budget:
             recommended_list += f"{row.City}  ||  {row.Commodity}  ||  {row.PricePHP}\n"
             total_price += int(row.PricePHP)
-    stx.scrollableTextbox(recommended_list, height=300)
+
+    if recommended_list:
+        recommended_list_data = [line.split("  ||  ") for line in recommended_list.split('\n') if line.strip()]
+        st.table(pd.DataFrame(recommended_list_data, columns=['City', 'Commodity', 'PricePHP']))
+    else:
+        st.warning("No items found within the budget.")
+
+    #stx.scrollableTextbox(recommended_list, height=300)
 
     st.subheader("Total Price: " + str(total_price))
 
@@ -53,6 +61,10 @@ def notion():
 
 def generate():
     pass
+
+
+
+
     
 main_interface()
 
