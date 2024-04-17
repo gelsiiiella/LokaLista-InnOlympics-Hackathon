@@ -32,6 +32,9 @@ def notion():
 
 def generate():
     pass
+
+def search():
+    pass
     
 main_interface()
 
