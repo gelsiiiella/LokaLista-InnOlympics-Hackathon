@@ -10,7 +10,7 @@ def main_interface():
 
 
     st.markdown("---")
-    st.header("Ingredients")
+    st.header("Local Produce")
     categories = ["canned goods", "dairy products", "meat", "fish", "vegetables", "fruits", "beverages", "snacks", "condiments", "frozen foods", "baking supplies", "cleaning supplies", "personal care"]
     
     rows = 5
