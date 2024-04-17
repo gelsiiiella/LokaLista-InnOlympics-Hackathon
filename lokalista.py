@@ -11,7 +11,7 @@ def main_interface():
 
     st.markdown("---")
     st.header("Local Produce")
-    categories = ["canned goods", "dairy products", "meat", "fish", "vegetables", "fruits", "beverages", "snacks", "condiments", "frozen foods", "baking supplies", "cleaning supplies", "personal care"]
+    categories = ["canned goods", "dairy products", "meat", "fish", "vegetables", "fruits", "beverages", "snacks", "condiments", "frozen foods", "baking supplies"]
     
     rows = 5
     cols = st.columns(3)
