@@ -22,9 +22,9 @@ def main_interface():
     st.button("Submit")
     
 def gsheet():   
-    url = "https://docs.google.com/spreadsheets/d/1JDy9md2VZPz4JbYtRPJLs81_3jUK47nx6GYQjgU8qNY/edit?usp=sharing"
-    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
-    data = conn.read(spreadsheet=url, usecols=[0, 6])
+    url = "https://docs.google.com/spreadsheets/d/1RiUc_unHWsdjHpAG8mIvMb1GD3_atoSSI_D_cSCCu2k/edit?usp=sharing"
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    data = conn.read(spreadsheet=url, usecols=[0, 1, 2, 3, 4, 5])
     st.dataframe(data)
 
 def notion():
@@ -37,4 +37,5 @@ def search():
     pass
     
 main_interface()
+gsheet()
 
