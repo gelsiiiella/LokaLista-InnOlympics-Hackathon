@@ -32,7 +32,7 @@ def main_interface():
     total_price = 0
     for row in df.itertuples():
         if total_price + int(row.PricePHP) <= budget:
-            recommended_list += f"{row.Province}  ||  {row.Commodity}  ||  {row.PricePHP}\n"
+            recommended_list += f"{row.City}  ||  {row.Commodity}  ||  {row.PricePHP}\n"
             total_price += int(row.PricePHP)
     stx.scrollableTextbox(recommended_list, height=300)
 
