@@ -33,12 +33,12 @@ def main_interface():
     total_price = 0
     for row in df.itertuples():
         if total_price + int(row.PricePHP) <= budget:
-            recommended_list += f"{row.City}  ||  {row.Commodity}  ||  {row.PricePHP}\n"
+            recommended_list += f"{row.Commodity}  ||  {row.PricePHP}\n"
             total_price += int(row.PricePHP)
 
     if recommended_list:
         recommended_list_data = [line.split("  ||  ") for line in recommended_list.split('\n') if line.strip()]
-        st.table(pd.DataFrame(recommended_list_data, columns=['City', 'Commodity', 'PricePHP']))
+        st.table(pd.DataFrame(recommended_list_data, columns=['Commodity', 'PricePHP']))
     else:
         st.warning("No items found within the budget.")
 
