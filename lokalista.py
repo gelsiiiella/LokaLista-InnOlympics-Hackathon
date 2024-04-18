@@ -62,7 +62,7 @@ def gsheet():
     data = conn.read(spreadsheet=url)
     return data
 
-def todolist(page_id,notion,content):
+def todolist(page_id,notion,commodity,city,price):
     notion.blocks.children.append(
         **{
             "block_id":page_id,
@@ -72,7 +72,7 @@ def todolist(page_id,notion,content):
                     {
                         "rich_text": [{
                             "text": {
-                                "content": content,
+                                "content": commodity+" "+city+" "+price
                             }
                         },
                         ],
@@ -109,9 +109,16 @@ def notion(page_url,df):
             ]
         }
     )
+
+    ctr=0
+    for row in df.itertuples():
+        if(ctr<20):
+            todolist(page_id,notion,str(row.Commodity),str(row.City),str(row.PricePHP))
+            ctr+=1
+        else:
+            break
     
-    for x in range(20):
-        todolist(page_id,notion,df[x].row.City)
+        
 
 def generate():
     pass
