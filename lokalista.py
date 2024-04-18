@@ -10,7 +10,9 @@ load_dotenv()
 
 def main_interface():
     df = gsheet() 
-
+    st.markdown("<h1 style='text-align: center; color: #f63366;'>LOKALISTA</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; font-size: 20px;'>Your Local Food Recommender</p>", unsafe_allow_html=True)
+    
     plaintext = st.text_input(label="Enter your budget amount", value="600")
     budget = int(plaintext)
 
@@ -46,7 +48,7 @@ def main_interface():
     st.header("Get your list in Notion!")
     st.header("Remember to add connection to your Page")
     page_url=st.text_input(label="Enter your Notion Page ID here",value="https://www.notion.so/API-TEST-b7b7540389a84514a3ab6b49215817a9")
-    st.button("Save", key="btn2", on_click=notion,args=[page_url])
+    st.button("Save", key="btn2", on_click=notion,args=[page_url,recommended_list])
     
 
 def gsheet():   
@@ -101,14 +103,6 @@ def notion(page_url):
             ]
         }
     )
-
-    
-
-def generate():
-    pass
-
-
-
 
     
 main_interface()
