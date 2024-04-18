@@ -32,7 +32,6 @@ To run the app locally, follow these steps:
 - pandas
 - streamlit-extras
 - streamlit-gsheets
-- streamlit-scrollable-textbox
 - python-dotenv
 - notion
 
