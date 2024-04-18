@@ -5,11 +5,6 @@
 <h1 align="center">LOKALISTA</h1>
 <p align="center">Your Local Food Recommender</p>
 
-<!-- Shields -->
-<p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-</p>
-
 ## Description
 
 LOKALISTA is a Streamlit-based web application that helps users find local produce based on their budget. It provides recommendations for local food items and allows users to save their shopping list to Notion.
