@@ -102,27 +102,7 @@ def notion(page_url):
         }
     )
 
-    """
-    notion.blocks.children.append(
-        **{
-            "block_id":page_id,
-            "children":[
-                {
-                    "to_do": 
-                    {
-                        "rich_text": [{
-                            "text": {
-                                "content": "Finish Q3 goals",
-                            }
-                        },],
-                        "checked": False,
-                        "color": "default",
-                    }
-                }
-            ]
-        }
-    )
-    """
+    
 
 def generate():
     pass
