@@ -35,6 +35,11 @@ To run the app locally, follow these steps:
 - python-dotenv
 - notion
 
+## Note
+The Notion.api requires you to establish an integration first before you can programmatically write content to a page, due to time constraints we have only managed to create that connection internally and not publicly.
+
+Meaning that the notion feature as it stands now is a proof of concept as it currently only works to one specific user.
+
 ## Developers
 
 - Mark De Chavez
