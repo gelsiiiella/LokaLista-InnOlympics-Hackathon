@@ -62,7 +62,7 @@ def gsheet():
     data = conn.read(spreadsheet=url)
     return data
 
-def todolist(page_id,content):
+def todolist(page_id,notion):
     notion.blocks.children.append(
         **{
             "block_id":page_id,
@@ -72,9 +72,10 @@ def todolist(page_id,content):
                     {
                         "rich_text": [{
                             "text": {
-                                "content": "Finish Q3 goals",
+                                "content": notion,
                             }
-                        },],
+                        },
+                        ],
                         "checked": False,
                         "color": "default",
                     }
@@ -108,6 +109,8 @@ def notion(page_url):
             ]
         }
     )
+    for x in range(5):
+        todolist(page_id,notion)
 
     """
     notion.blocks.children.append(
