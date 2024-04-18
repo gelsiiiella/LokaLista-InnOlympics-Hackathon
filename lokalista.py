@@ -1,9 +1,10 @@
+import os
 import streamlit as st
 import pandas as pd
 from streamlit_extras.tags import tagger_component
 from streamlit_gsheets import GSheetsConnection
+import streamlit_scrollable_textbox as stx
 from dotenv import load_dotenv
-import os
 from notion_client import Client
 
 load_dotenv()
@@ -38,17 +39,10 @@ def main_interface():
                 recommended_list += f"{row.Province}  ||  {row.Commodity}  ||  {row.Unit}  ||  {row.PricePHP}\n"
                 total_price += int(row.PricePHP)
 
-        if recommended_list:
-            recommended_list_data = [line.split("  ||  ") for line in recommended_list.split('\n') if line.strip()]
-            st.table(pd.DataFrame(recommended_list_data, columns=['Province','Commodity', 'Unit', 'PricePHP']))
-            st.subheader("Total Price: " + str(total_price))
-        else:
-            st.warning("No items found within the budget.")
-
     st.header("Get your list in Notion!")
-    st.header("Remember to add connection to your Page")
+    st.header("Remember to add our integration to your Page")
     page_url=st.text_input(label="Enter your Notion Page ID here",value="https://www.notion.so/API-TEST-b7b7540389a84514a3ab6b49215817a9")
-    st.button("Save", key="btn2", on_click=notion,args=[page_url,recommended_list])
+    st.button("Save", key="btn2", on_click=notion,args=[page_url,df])
     
 
 def gsheet():   
@@ -57,7 +51,7 @@ def gsheet():
     data = conn.read(spreadsheet=url)
     return data
 
-def todolist(page_id,content):
+def todolist(page_id,notion,content):
     notion.blocks.children.append(
         **{
             "block_id":page_id,
@@ -67,9 +61,10 @@ def todolist(page_id,content):
                     {
                         "rich_text": [{
                             "text": {
-                                "content": "Finish Q3 goals",
+                                "content": content,
                             }
-                        },],
+                        },
+                        ],
                         "checked": False,
                         "color": "default",
                     }
@@ -78,7 +73,7 @@ def todolist(page_id,content):
         }
     )
 
-def notion(page_url):
+def notion(page_url,df):
     page_id=(page_url[-32:])
     print(page_id)
    
@@ -103,7 +98,11 @@ def notion(page_url):
             ]
         }
     )
-
     
-main_interface()
+    for x in range(20):
+        todolist(page_id,notion,df[x].row.City)
 
+def generate():
+    pass
+
+main_interface()
