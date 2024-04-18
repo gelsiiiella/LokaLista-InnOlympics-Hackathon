@@ -24,7 +24,7 @@ To run the app locally, follow these steps:
 2. Install the required dependencies using `pip install -r requirements.txt`.
 3. Create a `.env` file in the root directory of the project and add your Notion API token.
 4. Run the Streamlit app using `streamlit run lokalista.py`.
-5. Access the app in your browser at `http://localhost:8501`.
+
 
 ## Dependencies
 
