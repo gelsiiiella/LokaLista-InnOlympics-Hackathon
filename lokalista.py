@@ -46,6 +46,7 @@ def main_interface():
         if recommended_items:
             recommended_df = pd.DataFrame(recommended_items, columns=["Province", "Commodity", "Unit", "Price (PHP)"])
             st.table(recommended_df)
+            st.write("Total Budget:", total_price)
         else:
             st.write("No items within budget.")
 
