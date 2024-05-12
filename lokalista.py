@@ -36,13 +36,19 @@ def main_interface():
         st.markdown("---")
         st.header("Recommended Items")
 
-        recommended_list = ""
+        recommended_items = []
         total_price = 0
         for row in filtered_df.itertuples():
             if total_price + int(row.PricePHP) <= budget:
-                recommended_list += f"{row.Province}  ||  {row.Commodity}  ||  {row.Unit}  ||  {row.PricePHP}\n"
+                recommended_items.append([row.Province, row.Commodity, row.Unit, row.PricePHP])
                 total_price += int(row.PricePHP)
-        st.write(recommended_list)
+        
+        if recommended_items:
+            recommended_df = pd.DataFrame(recommended_items, columns=["Province", "Commodity", "Unit", "Price (PHP)"])
+            st.table(recommended_df)
+        else:
+            st.write("No items within budget.")
+
 
     st.header("Get your list in Notion!")
     st.write("Remember to add our integration to your Page")
