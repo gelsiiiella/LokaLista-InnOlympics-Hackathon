@@ -2,12 +2,10 @@ import os
 import streamlit as st
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
-import streamlit_scrollable_textbox as stx
 from dotenv import load_dotenv
 from notion_client import Client
 
 load_dotenv()
-
 
 def main_interface():
     df = gsheet() 
@@ -44,12 +42,13 @@ def main_interface():
             if total_price + int(row.PricePHP) <= budget:
                 recommended_list += f"{row.Province}  ||  {row.Commodity}  ||  {row.Unit}  ||  {row.PricePHP}\n"
                 total_price += int(row.PricePHP)
+        st.write(recommended_list)
 
     st.header("Get your list in Notion!")
     st.write("Remember to add our integration to your Page")
-    page_url=st.text_input(label="Enter your Notion Page ID here",value="https://www.notion.so/API-TEST-b7b7540389a84514a3ab6b49215817a9")
-    st.button("Save", key="btn2", on_click=notion,args=[page_url,df])
-    
+    page_url = st.text_input(label="Enter your Notion Page ID here", value="https://www.notion.so/API-TEST-b7b7540389a84514a3ab6b49215817a9")
+    st.button("Save", key="btn2", on_click=notion, args=[page_url, df])
+
 
 def gsheet():   
     url = "https://docs.google.com/spreadsheets/d/1RiUc_unHWsdjHpAG8mIvMb1GD3_atoSSI_D_cSCCu2k/edit?usp=sharing"
@@ -57,20 +56,19 @@ def gsheet():
     data = conn.read(spreadsheet=url)
     return data
 
-def todolist(page_id,notion,commodity,city,price):
+
+def todolist(page_id, notion, commodity, city, price):
     notion.blocks.children.append(
         **{
-            "block_id":page_id,
-            "children":[
+            "block_id": page_id,
+            "children": [
                 {
-                    "to_do": 
-                    {
+                    "to_do": {
                         "rich_text": [{
                             "text": {
-                                "content": commodity+" "+city+" "+price
+                                "content": f"{commodity} {city} {price}"
                             }
-                        },
-                        ],
+                        }],
                         "checked": False,
                         "color": "default",
                     }
@@ -80,39 +78,40 @@ def todolist(page_id,notion,commodity,city,price):
     )
 
 
-def notion(page_url,df):
-    page_id=(page_url[-32:])
+def notion(page_url, df):
+    page_id = page_url[-32:]
     print(page_id)
    
-    notion = Client(auth=os.environ["NOTION_TOKEN"])
+    notion_client = Client(auth=os.environ["NOTION_TOKEN"])
 
-    notion.blocks.children.append(
+    notion_client.blocks.children.append(
         **{
-            "block_id":page_id,
-            "children":[
+            "block_id": page_id,
+            "children": [
                 {
                     "heading_2": {
                         "rich_text": [
-                        {
-                            "text": {
-                                "content": "Shopping List"
+                            {
+                                "text": {
+                                    "content": "Shopping List"
+                                },
                             },
-                        },
                         ],
-                        "color":"red"
+                        "color": "red"
                     },
                 },
             ]
         }
     )
 
-    ctr=0
+    ctr = 0
     for row in df.itertuples():
-        if(ctr<20):
-            todolist(page_id,notion,str(row.Commodity),str(row.City),str(row.PricePHP))
-            ctr+=1
+        if ctr < 20:
+            todolist(page_id, notion_client, str(row.Commodity), str(row.City), str(row.PricePHP))
+            ctr += 1
         else:
             break
+
 
 def generate():
     pass
